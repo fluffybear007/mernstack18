@@ -1,0 +1,1 @@
+//Shorthand - is avoids writing redun
