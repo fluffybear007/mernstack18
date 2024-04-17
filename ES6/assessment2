@@ -57,13 +57,166 @@ for (var i of arr) {
 
 //6. Give me an example of bind and write its usage, comparison with arrow function
 //Function Borrowing.With the bind() method, an object can borrow a method from another object.
-//The example below creates 2 objects (person and member).
-//The member object borrows the fullname method from the person object:
-
+//The example below creates 2 objects (people and member).
+//The member object borrows the fullname method from the people object:
+const people = {
+    firstName:"John",
+    lastName: "Doe",
+    fullName: function () {
+      return this.firstName + " " + this.lastName;
+    }
+  }
+  
+  const member = {
+    firstName:"Hege",
+    lastName: "Nilsen",
+  }
+  
+  let fullName = people.fullName.bind(member);
 //7. Create an example showing usage of event loop in concurrent execution cycle
+//JavaScript has a runtime model based on an event loop, which is responsible for executing the code, collecting and processing events, and executing queued sub-tasks. This model is quite different from models in other languages like C and Java.
+
+//Stack
+//Function calls form a stack of frames.
+function foo(b) {
+    const a = 10;
+    return a + b + 11;
+  }
+  
+  function bar(x) {
+    const y = 3;
+    return foo(x * y);
+  }
+  
+  const baz = bar(7); // assigns 42 to baz
+
 
 //8. create an example showing usage of short hand and default param.
 
+//The shorthand techniques can help you to write optimized code and let you achieve your goal with less coding.
+
+//1. Declaring variables
+//Longhand 
+let x; 
+let y = 20; 
+
+//Shorthand 
+let x, y = 20;
+
+//2. Assigning values to multiple variables
+//assign values to multiple variables in one line with array destructuring.
+//Longhand 
+let a, b, c; 
+a = 5; 
+b = 8; 
+c = 12;
+ 
+//Shorthand 
+let [a, b, c] = [5, 8, 12];
+
+//3. The Ternary operator
+let marks = 26;
+
+//Longhand
+let result; 
+if(marks >= 30){
+ result = 'Pass'; 
+}else{ 
+ result = 'Fail'; 
+}
+
+//Shorthand 
+let result = marks >= 30 ? 'Pass' : 'Fail';
+//4. Assigning a default value
+
+//Longhand 
+let imagePath; 
+let path = getImagePath(); 
+if(path !== null && path !== undefined && path !== '') { 
+  imagePath = path; 
+} else { 
+  imagePath = 'default.jpg'; 
+} 
+
+//Shorthand 1
+let imagePath = getImagePath() || 'default.jpg';
+
+//Shorthand 2
+let imagePath = getImagePath() ?? 'default.jpg';
+
+//5. AND(&&) Short circuit evaluation
+//calling a function only if a variable is true, then can use AND(&&) short circuit as an alternative for this.
+//Longhand 
+if (isLoggedin) {
+    goToHomepage(); 
+   } 
+   
+   //Shorthand 
+   isLoggedin && goToHomepage();
+   
+//6. Swap two variables
+let x = 'Hello', y = 55; 
+
+//Longhand 
+const temp = x; 
+x = y; 
+y = temp; 
+
+//Shorthand 
+[x, y] = [y, x];
+
+
 //9. Create two objects with some properties and merge them using Object method and ES6 way
+var obj1 = {name: 'Daisy', age: 30};
+var obj2 = {name: 'Casey'};
+
+Object.assign(obj1, obj2);
+
+console.log(obj1.name === 'Casey' && obj1.age === 30);
 
 //10. Give me an example of call and apply each with it's usage
+
+//call is a function that you use to change the value of this inside a function and execute it with the arguments provided.
+//syntax of the call function
+//func.call(thisObj, args1, args2, ...)
+
+function Car(type, fuelType){
+	this.type = type;
+	this.fuelType = fuelType;
+}
+
+function setBrand(brand){
+	Car.call(this, "convertible", "petrol");
+	this.brand = brand;
+	console.log(`Car details = `, this);
+}
+
+function definePrice(price){
+	Car.call(this, "convertible", "diesel");
+	this.price = price;
+	console.log(`Car details = `, this);
+}
+
+const newBrand = new setBrand('Brand1');
+const newCarPrice = new definePrice(100000);
+
+//apply function
+function Car(type, fuelType){
+	this.type = type;
+	this.fuelType = fuelType;
+}
+
+function setBrand(brand){
+	Car.apply(this, ["convertible", "petrol"]); //Syntax with array literal
+	this.brand = brand;
+	console.log(`Car details = `, this);
+}
+
+function definePrice(price){
+	Car.apply(this, new Array("convertible", "diesel")); //Syntax with array object construction
+	this.price = price;
+	console.log(`Car details = `, this);
+}
+
+const newBrand = new setBrand('Brand1');
+const newCarPrice = new definePrice(100000);
